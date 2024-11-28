@@ -1,0 +1,4 @@
+Part	Status	PDF	Comment
+65959	Found	C:\Users\Think\rohs-automation\output_files\delock\65959_EU_conform.pdf
+ABC	NotFound		Product Tab Not found
+POI	NotFound		Product Tab Not found
