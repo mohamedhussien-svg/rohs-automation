@@ -27,6 +27,7 @@ public class ChromeUtility {
         ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("plugins.always_open_pdf_externally", true);
+        prefs.put("download.prompt_for_download",false);
         prefs.put("download.default_directory", downloadDir);
         options.setExperimentalOption("prefs", prefs);
 
