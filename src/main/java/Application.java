@@ -1,10 +1,12 @@
 import org.automation.DelockSearch;
 import org.automation.EdacSearch;
+import org.automation.LabfacilitySearch;
 
 
 public class Application {
-    private final static String SUPPLIER_NAME = "edac";
-//    private final static String SUPPLIER_NAME = "delock";
+    //private final static String SUPPLIER_NAME = "edac";
+    //private final static String SUPPLIER_NAME = "delock";
+    private final static String SUPPLIER_NAME = "labfacility";
 
     public static void main(String[] args) {
         
@@ -16,6 +18,10 @@ public class Application {
             case "edac":
                 EdacSearch edacSearch = new EdacSearch();
                 edacSearch.search();
+                break;
+            case "labfacility":
+                LabfacilitySearch labfacilitySearch = new LabfacilitySearch();
+                labfacilitySearch.search();
 
         }
 

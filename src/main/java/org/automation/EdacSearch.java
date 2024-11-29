@@ -77,7 +77,7 @@ public class EdacSearch {
                     continue;
                 }
                 searchBox.sendKeys(part);
-                chromeUtility.wait(driver, 5);
+                chromeUtility.wait(driver, 10);
 
 
                 WebElement searchButton = chromeUtility.getElementByXpathJs(driver, addPNButtonXpath);
@@ -86,7 +86,7 @@ public class EdacSearch {
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Add Button not found"});
                     continue;
                 }
-                chromeUtility.wait(driver, 5);
+                chromeUtility.wait(driver, 10);
                 searchButton.click();
 
                 Thread.sleep(5000);

@@ -1,4 +1,25 @@
 Part	Status	PDF	Comment
-65959	Found	C:\Users\Think\rohs-automation\output_files\delock\65959_EU_conform.pdf
-ABC	NotFound		Product Tab Not found
-POI	NotFound		Product Tab Not found
+81102	NotFound		PartNumber Not Found
+81103	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+81104	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+81114	NotFound		PartNumber Not Found
+81109	NotFound		PartNumber Not Found
+81108	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+81111	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67110	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67116	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67117	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67102	NotFound		PartNumber Not Found
+67112	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67106	NotFound		PartNumber Not Found
+67105	NotFound		PartNumber Not Found
+67114	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67113	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67103	NotFound		PartNumber Not Found
+67115	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67108	NotFound		PartNumber Not Found
+67111	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67119	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67109	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67118	Found	C:\tools\rohs-automation\output_files\delock\partsStatus.txt
+67107	NotFound		PartNumber Not Found

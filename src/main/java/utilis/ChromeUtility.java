@@ -52,7 +52,7 @@ public class ChromeUtility {
 
     public WebElement getElementByXpathJs(WebDriver driver, String xpathExpression) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000L));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(30000L));
             return wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
         } catch (Exception e) {
             return null;
