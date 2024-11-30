@@ -1,6 +1,6 @@
 Part	Status	PDF	Comment
-664-015-664-03C	NotFound		Need Manual Checks 
-662-025-364-00A	Found	C:\tools\rohs-automation\output_files\edac\partsStatus.txt
-662-037-364-05C	NotFound		Need Manual Checks 
-662-015-264-05A	Found	C:\tools\rohs-automation\output_files\edac\partsStatus.txt
-664-025-264-04A	NotFound		Need Manual Checks 
+664-015-664-03C	Found	C:\tools\rohs-automation\output_files\edac\partsStatus.txt
+662-025-364-00A	NotFound		Need Manual Checks 
+662-037-364-05C	Found	C:\tools\rohs-automation\output_files\edac\partsStatus.txt
+662-015-264-05A	NotFound		Need Manual Checks 
+664-025-264-04A	Found	C:\tools\rohs-automation\output_files\edac\partsStatus.txt

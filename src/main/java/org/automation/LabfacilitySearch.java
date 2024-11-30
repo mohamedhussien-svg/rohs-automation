@@ -23,8 +23,8 @@ public class LabfacilitySearch {
     public static final String SUPPLIER = "labfacility";
 
     public static final String searchBoxXpath = "//*[@id=\"html-body\"]/div[2]/header/div/div/div/div/nav/ul[1]/li[7]/section/div/section[1]/input";
-    public static final String searchButtonXpath = "//*[@id=\"html-body\"]/div[2]/header/div/div/div/div/nav/ul[1]/li[7]/section/div/section[1]/button[2]";
-    public static final String resultPageXpath = "//*[@id=\"product_addtocart_form\"]/div[2]/div[2]/div[5]/div[2]/a";
+    public static final String searchButtonXpath = "//*[@id=\"html-body\"]/div[2]/header/div/div/div/div/nav/ul[1]/li[7]/section/div/section[2]/section/ul/li/section/a";
+    public static final String resultPageXpath = "//*[@id=\"product_addtocart_form\"]/div[2]/div[2]/div[5]/div[2]/a/span";
 
     public void search() {
 
@@ -68,11 +68,11 @@ public class LabfacilitySearch {
                     continue;
                 }
                 searchButton.click();
-                chromeUtility.wait(driver, 5);
+                chromeUtility.wait(driver, 30);
 
 
                 WebElement resultPage = chromeUtility.getElementByXpath(driver, resultPageXpath);
-                if (Objects.isNull(resultPage) || !resultPage.getText().toLowerCase().contains("RoHS")) {
+                if (Objects.isNull(resultPage)){
                     log.info("PartNumber Not Found {}", part);
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
                     continue;
@@ -81,7 +81,7 @@ public class LabfacilitySearch {
                 resultPage.click();
                 Thread.sleep(5000);
                 log.info("PartNumber Found {}", part);
-                //FileUtility.writeFileRow(partsStatusFile, new String[]{part, "Found", FileUtility.lastFileCreated(downloadDir)});
+                FileUtility.writeFileRow(partsStatusFile, new String[]{part, "Found", FileUtility.lastFileCreated(downloadDir)});
             } catch (Exception e) {
                 e.printStackTrace();
                 FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Need Manual Checks "});

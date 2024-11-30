@@ -7,23 +7,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilis.ChromeUtility;
 import utilis.FileUtility;
+
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class DelockSearch {
 
-    private static final Logger log = LoggerFactory.getLogger(DelockSearch.class);
+public class SkyworksSearch {
 
-    public static final String URL = "https://www.delock.com/";
-    public static final String SUPPLIER = "delock";
+    private static final Logger log = LoggerFactory.getLogger(SkyworksSearch.class);
 
-    public static final String searchBoxXpath = "/html/body/header/section/div[2]/form/input[1]";
-    public static final String searchButtonXpath = "/html/body/header/section/div[2]/form/input[2]";
-    public static final String productsTabXpath = "/html/body/div[1]/section/article/div[2]/div[2]/div[2]/a[3]";
-    public static final String resultPageXpath = "/html/body/div[1]/section/article/div[2]/div[2]/div[5]/a[2]";
+    public static final String URL = "https://www.skyworksinc.com/Product_Certificate.aspx";
+    public static final String SUPPLIER = "skyworks";
 
+    public static final String searchBoxXpath = "//*[@id=\"PartNumber\"]";
+    public static final String searchButtonXpath = "//*[@id=\"SubmitButt\"]";
+    public static final String resultPageXpath = "//*[@id=\"Form1\"]/div[4]/ul/li/a/u";
 
     public void search() {
 
@@ -73,17 +73,10 @@ public class DelockSearch {
                 searchButton.click();
                 chromeUtility.wait(driver, 5);
 
-                WebElement products = chromeUtility.getElementByXpath(driver, productsTabXpath);
-                if (Objects.isNull(products)) {
-                    log.info("PartNumber Not Found {} {}", part, "Product Tab Not found");
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
-                    continue;
-                }
-                products.click();
-                chromeUtility.wait(driver, 5);
+
 
                 WebElement resultPage = chromeUtility.getElementByXpath(driver, resultPageXpath);
-                if (Objects.isNull(resultPage) || !resultPage.getText().toLowerCase().contains("conformity")) {
+                if (Objects.isNull(resultPage)) {
                     log.info("PartNumber Not Found {}", part);
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
                     continue;
@@ -104,3 +97,5 @@ public class DelockSearch {
 
 
 }
+
+
