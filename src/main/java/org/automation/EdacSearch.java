@@ -21,11 +21,11 @@ public class EdacSearch {
     public static final String URL = "https://edac.net/environmental-compliance";
     public static final String SUPPLIER = "edac";
 
-    public static final String selectDocType = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[1]/select";
-    public static final String searchBoxXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[3]/input[2]";
-    public static final String addPNButtonXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[4]/div/div/a";
-    public static final String downloadButtonXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[2]";
-    public static final String clearAllXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[1]";
+    public static final String selectDocType = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[1]/select";
+    public static final String searchBoxXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[3]/input[2]";
+    public static final String addPNButtonXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[4]/div/div/a";
+    public static final String downloadButtonXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[2]";
+    public static final String clearAllXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[1]";
 
 
     public void search() {
@@ -50,7 +50,7 @@ public class EdacSearch {
 
         ChromeUtility chromeUtility = new ChromeUtility(downloadDir);
 
-        WebDriver driver = chromeUtility.getDriver();
+        WebDriver driver = chromeUtility.getFireFoxDriver();
 
         List<String> parts = FileUtility.readFile(inputFilePath);
 

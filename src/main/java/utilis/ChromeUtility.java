@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,6 +34,20 @@ public class ChromeUtility {
         options.setExperimentalOption("prefs", prefs);
 
         ChromeDriver driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+        return driver;
+    }
+
+    public WebDriver getFireFoxDriver() {
+        String workingDir = System.getProperty("user.dir");
+        System.setProperty("webdriver.gecko.driver", workingDir + "\\geckodriver-v0.34.0-win64\\geckodriver.exe");
+        FirefoxOptions options = new FirefoxOptions();
+        options.addPreference("browser.download.folderList", 2);
+        options.addPreference("browser.download.dir", downloadDir);
+        options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
+        options.addPreference("pdfjs.disabled", true);
+
+        FirefoxDriver driver = new FirefoxDriver(options);
         driver.manage().window().maximize();
         return driver;
     }

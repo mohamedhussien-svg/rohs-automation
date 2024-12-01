@@ -48,7 +48,7 @@ public class DelockSearch {
 
         ChromeUtility chromeUtility = new ChromeUtility(downloadDir);
 
-        WebDriver driver = chromeUtility.getDriver();
+        WebDriver driver = chromeUtility.getFireFoxDriver();
 
         List<String> parts = FileUtility.readFile(inputFilePath);
 

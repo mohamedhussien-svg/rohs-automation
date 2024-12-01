@@ -1,1 +1,3 @@
 Part	Status	PDF	Comment
+J21014421N00033	Found	C:\Users\Think\rohs-automation\output_files\edac\certificate-of-compliance-eu-rohs-declaration-2024-12-01_12-12.pdf
+J21014421P00033	Found	C:\Users\Think\rohs-automation\output_files\edac\certificate-of-compliance-eu-rohs-declaration-2024-12-01_12-12(1).pdf
