@@ -1,11 +1,8 @@
 package org.automation;
 
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import utilis.ChromeUtility;
 import utilis.FileUtility;
 
@@ -13,19 +10,17 @@ import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
-@Slf4j
 public class EdacSearch {
 
-    private static final Logger log = LoggerFactory.getLogger(EdacSearch.class);
 
     public static final String URL = "https://edac.net/environmental-compliance";
     public static final String SUPPLIER = "edac";
 
-    public static final String selectDocType = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[1]/select";
-    public static final String searchBoxXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[3]/input[2]";
-    public static final String addPNButtonXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[4]/div/div/a";
-    public static final String downloadButtonXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[2]";
-    public static final String clearAllXpath = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[1]";
+    public static final String selectDocType = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[1]/select";
+    public static final String searchBoxXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[3]/input[2]";
+    public static final String addPNButtonXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/div[4]/div/div/a";
+    public static final String downloadButtonXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[2]";
+    public static final String clearAllXpath = "/html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/form/div[2]/a[1]";
 
 
     public void search() {
@@ -50,7 +45,7 @@ public class EdacSearch {
 
         ChromeUtility chromeUtility = new ChromeUtility(downloadDir);
 
-        WebDriver driver = chromeUtility.getDriver();
+        WebDriver driver = chromeUtility.getFireFoxDriver();
 
         List<String> parts = FileUtility.readFile(inputFilePath);
 
@@ -61,7 +56,7 @@ public class EdacSearch {
                 WebElement dropdown = chromeUtility.getElementByXpath(driver, selectDocType);
 
                 if (Objects.isNull(dropdown)) {
-                    log.info("PartNumber Not Found {}, {}", part, "Doc Type not found");
+                    System.out.println("PartNumber Not Found " + part + " Doc Type not found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Doc Type not found"});
                     continue;
                 }
@@ -72,7 +67,7 @@ public class EdacSearch {
 
                 WebElement searchBox = chromeUtility.getElementByXpath(driver, searchBoxXpath);
                 if (Objects.isNull(searchBox)) {
-                    log.info("PartNumber Not Found {}, {}", part, "Search Box not found");
+                    System.out.println("PartNumber Not Found " + part + " Search Box not found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Search Box not found"});
                     continue;
                 }
@@ -82,7 +77,7 @@ public class EdacSearch {
 
                 WebElement searchButton = chromeUtility.getElementByXpathJs(driver, addPNButtonXpath);
                 if (Objects.isNull(searchButton)) {
-                    log.info("PartNumber Not Found {}, {}", part, "Add Button not found");
+                    System.out.println("PartNumber Not Found " + part + " Add Button not found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Add Button not found"});
                     continue;
                 }
@@ -92,15 +87,15 @@ public class EdacSearch {
                 Thread.sleep(5000);
                 WebElement downloadButton = chromeUtility.getElementByXpath(driver, downloadButtonXpath);
                 if (Objects.isNull(downloadButton)) {
-                    log.info("PartNumber Not Found {}", part);
+                    System.out.println("PartNumber Not Found " + part);
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "DownloadButton Not Found"});
                     continue;
                 }
-                log.info(downloadButton.getText());
+
                 downloadButton.click();
 
                 Thread.sleep(5000);
-                log.info("PartNumber Found {}", part);
+                System.out.println("PartNumber Found " + part);
                 FileUtility.writeFileRow(partsStatusFile, new String[]{part, "Found", FileUtility.lastFileCreated(downloadDir)});
 
                 WebElement clearAll = chromeUtility.getElementByXpath(driver, clearAllXpath);
@@ -112,7 +107,7 @@ public class EdacSearch {
                 FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Need Manual Checks "});
             }
         }
-        log.info("Process completed for file {}", inputFilePath);
+        System.out.println("Process completed for file {}" + inputFilePath);
         driver.quit();
     }
 
