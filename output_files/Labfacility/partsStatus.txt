@@ -1,4 +1,4 @@
 Part	Status	PDF	Comment
 XE-7332	Found	C:\tools\rohs-automation\output_files\labfacility\partsStatus.txt
-XE-7334	Found	C:\tools\rohs-automation\output_files\labfacility\c3cad256-d97b-437f-8cae-3ab5d7f9ec05.tmp
-XE-7455	Found	C:\tools\rohs-automation\output_files\labfacility\partsStatus.txt
+XE-7334	Found	C:\tools\rohs-automation\output_files\labfacility\partsStatus.txt
+XE-7455	NotFound		Search Button not found

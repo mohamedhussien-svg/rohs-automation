@@ -1,14 +1,13 @@
 import org.automation.DelockSearch;
 import org.automation.EdacSearch;
 import org.automation.LabfacilitySearch;
-import org.automation.SkyworksSearch;
 
 
 public class Application {
     //private final static String SUPPLIER_NAME = "edac";
-    //private final static String SUPPLIER_NAME = "delock";
-    //private final static String SUPPLIER_NAME = "labfacility";
-    private final static String SUPPLIER_NAME = "skyworks";
+     //private final static String SUPPLIER_NAME = "delock";
+    private final static String SUPPLIER_NAME = "labfacility";
+    //private final static String SUPPLIER_NAME = "skyworks";
 
     public static void main(String[] args) {
         
