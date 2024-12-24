@@ -1,4 +1,4 @@
 Part	Status	PDF	Comment
-XE-7332	Found	C:\tools\rohs-automation\output_files\labfacility\partsStatus.txt
-XE-7334	Found	C:\tools\rohs-automation\output_files\labfacility\partsStatus.txt
-XE-7455	NotFound		Search Button not found
+XE-7332	NotFound		Search Box not found
+XE-7334	NotFound		Need Manual Checks 
+XE-7455	NotFound		Need Manual Checks 

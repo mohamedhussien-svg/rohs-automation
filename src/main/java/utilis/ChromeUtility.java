@@ -43,7 +43,7 @@ public class ChromeUtility {
         String workingDir = System.getProperty("user.dir");
         System.setProperty("webdriver.gecko.driver", workingDir + "\\geckodriver-v0.34.0-win64\\geckodriver.exe");
         FirefoxOptions options = new FirefoxOptions();
-//        options.setBinary("C:\\Users\\A79386\\AppData\\Local\\Mozilla Firefox\\firefox.exe");
+        options.setBinary("C:\\Users\\A79386\\AppData\\Local\\Mozilla Firefox\\firefox.exe");
         options.addPreference("browser.download.folderList", 2);
         options.addPreference("browser.download.dir", downloadDir);
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");

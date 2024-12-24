@@ -9,17 +9,20 @@ import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
-public class LabfacilitySearch {
 
 
-    public static final String URL = "https://www.labfacility.com/";
-    public static final String SUPPLIER = "labfacility";
+public class LemoSearch {
 
-    public static final String searchBoxXpath = "/html/body/div[2]/header/div/div/div/div/nav/ul[1]/li[7]/section/div/section[1]/input";
-    public static final String searchButtonXpath = "/html/body/div[2]/header/div/div/div/div/nav/ul[1]/li[7]/section/div/section[2]/section/ul/li/section/a";
-    public static final String resultPageXpath = "/html/body/div[2]/main/div[2]/div/div[5]/div[3]/form/div[2]/div[2]/div[5]/div[2]/a/span";
+    public static final String URL = "https://www.lemo.com/en/";
+    public static final String SUPPLIER = "lemo";
+
+    public static final String searchBoxXpath = "/html/body/div[1]/div[2]/div/header/div/div/div[3]/form/input";
+    public static final String searchButtonXpath = "/html/body/div[1]/div[2]/div/header/div/div/div[3]/div/ul/li/ul/li/a";
+    public static final String productsTabXpath = "/html/body/div[1]/div[2]/div/main/div/div/div[1]/div/div/div/article/a/div[1]/figure/picture/img";
+    public static final String resultPageXpath = "/html/body/div[2]/main/div/div/section[1]/div/div/div/div/section/div[1]/a/span[2]";
 
     public void search() {
+
 
         String workingDir = System.getProperty("user.dir");
 
@@ -30,6 +33,7 @@ public class LabfacilitySearch {
         String inputFilePath = workingDir + "\\input_files\\" + SUPPLIER + ".txt";
 
         String[] statusFileHeader = new String[]{"Part", "Status", "PDF", "Comment"};
+
 
         FileUtility.clearDir(downloadDir);
 
@@ -46,7 +50,8 @@ public class LabfacilitySearch {
         for (String part : parts) {
             try {
                 driver.get(URL);
-                chromeUtility.wait(driver, 30);
+                chromeUtility.wait(driver, 5);
+
                 WebElement searchBox = chromeUtility.getElementByXpath(driver, searchBoxXpath);
                 if (Objects.isNull(searchBox)) {
                     System.out.println("PartNumber Not Found " + part + " Search Box not found");
@@ -54,15 +59,24 @@ public class LabfacilitySearch {
                     continue;
                 }
                 searchBox.sendKeys(part);
-                WebElement searchButton = chromeUtility.getElementByXpathJs(driver, searchButtonXpath);
+
+                WebElement searchButton = chromeUtility.getElementByXpath(driver, searchButtonXpath);
                 if (Objects.isNull(searchButton)) {
                     System.out.println("PartNumber Not Found " + part + " Search Button not found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Search Button not found"});
                     continue;
                 }
                 searchButton.click();
-                chromeUtility.wait(driver, 30);
+                chromeUtility.wait(driver, 5);
 
+//                WebElement products = chromeUtility.getElementByXpath(driver, productsTabXpath);
+//                if (Objects.isNull(products)) {
+//                    System.out.println("PartNumber Not Found " + part + " Product Tab Not found");
+//                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+//                    continue;
+//                }
+//                products.click();
+//                chromeUtility.wait(driver, 15);
 
                 WebElement resultPage = chromeUtility.getElementByXpath(driver, resultPageXpath);
                 if (Objects.isNull(resultPage)) {
@@ -82,7 +96,10 @@ public class LabfacilitySearch {
         }
         System.out.println("Process completed for file " + inputFilePath);
         driver.quit();
-
     }
 
+
 }
+
+
+
