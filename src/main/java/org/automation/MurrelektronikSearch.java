@@ -1,5 +1,6 @@
 package org.automation;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utilis.ChromeUtility;
@@ -8,6 +9,7 @@ import utilis.FileUtility;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 public class MurrelektronikSearch {
@@ -22,14 +24,15 @@ public class MurrelektronikSearch {
 
     public static final String downloadLink1Xpath = "/html/body/div[1]/div[5]/div/div/div/div[3]/div/div[1]/div[2]/div[2]/div[3]/div[5]/div/div/div/div/form/div[3]/div/div[2]/ul/li[8]/div/a";
     public static final String downloadLink2Xpath = "/html/body/div[1]/div[5]/div/div/div/div[3]/div/div[1]/div[2]/div[2]/div[3]/div[4]/div/div/div/div/form/div[3]/div/div[2]/ul/li[6]/div/a";
-
+    public static final String downloadUl1Xpath = "/html/body/div[1]/div[5]/div/div/div/div[3]/div/div[1]/div[2]/div[2]/div[3]/div[4]/div/div/div/div/form/div[3]/div/div[2]/ul";
+    public static final String downloadUl2Xpath = "/html/body/div[1]/div[5]/div/div/div/div[3]/div/div[1]/div[2]/div[2]/div[3]/div[5]/div/div/div/div/form/div[3]/div/div[2]/ul";
 
     public static final String acceptConditionsXpath = "//*[@id=\"checkAgbSingleDownload\"]";
     public static final String finalDownloadXpath = "//*[@id=\"mediabasket-form-single-button\"]";
     public static final String acceptPrivacy = "/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/button[2]";
 
 
-    public void search() {
+    public void search() throws InterruptedException {
 
 
         String workingDir = System.getProperty("user.dir");
@@ -75,16 +78,35 @@ public class MurrelektronikSearch {
                     continue;
                 }
                 downloadButton.click();
-                chromeUtility.wait(driver, 1);
+                chromeUtility.wait(driver, 5);
 
-                WebElement downloadLink = chromeUtility.getElementByXpath(driver, new String[]{downloadLink1Xpath, downloadLink2Xpath});
-                if (Objects.isNull(downloadLink)) {
+
+                WebElement downloadUl = chromeUtility.getElementByXpath(driver, new String[]{downloadUl1Xpath, downloadUl2Xpath});
+                if (Objects.isNull(downloadUl)) {
+                    System.out.println("PartNumber Not Found " + part + " Download UL not found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Download UL not found"});
+                    continue;
+                }
+                Thread.sleep(5000);
+                List<WebElement> elements = chromeUtility.getElementsByXpath(downloadUl, ".//li");
+
+
+                Optional<WebElement> rohsReach = elements.stream().filter(x -> x.getText().toUpperCase().contains("ROHS REACH")).findFirst();
+                if (!rohsReach.isPresent()) {
                     System.out.println("PartNumber Not Found " + part + " downloadLink  Not found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
                     continue;
                 }
-                downloadLink.click();
-                chromeUtility.wait(driver, 1);
+
+//                WebElement downloadLink = chromeUtility.getElementByXpath(driver, new String[]{downloadLink1Xpath, downloadLink2Xpath});
+//                if (Objects.isNull(downloadLink)) {
+//                    System.out.println("PartNumber Not Found " + part + " downloadLink  Not found");
+//                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+//                    continue;
+//                }
+                Thread.sleep(5000);
+                rohsReach.get().findElement(By.xpath(".//div/a")).click();
+                chromeUtility.wait(driver, 5);
 
                 WebElement acceptCondition = chromeUtility.getElementByXpath(driver, acceptConditionsXpath);
                 if (Objects.isNull(acceptCondition)) {
@@ -94,7 +116,7 @@ public class MurrelektronikSearch {
                 }
                 acceptCondition.click();
                 Thread.sleep(2000);
-                
+
                 WebElement finalDownload = chromeUtility.getElementByXpath(driver, finalDownloadXpath);
                 if (Objects.isNull(finalDownload)) {
                     System.out.println("PartNumber Not Found " + part + " finalDownload  Not found");
@@ -107,8 +129,9 @@ public class MurrelektronikSearch {
                 Thread.sleep(1000);
 
                 System.out.println("PartNumber Found " + part);
-                FileUtility.writeFileRow(partsStatusFile, new String[]{part, "Found", FileUtility.lastFileCreated(downloadDir)});
+                FileUtility.writeFileRow(partsStatusFile, new String[]{part, "Found", FileUtility.lastFileCreated(downloadDir), rohsReach.get().getText().replace("\n", "")});
             } catch (Exception e) {
+                Thread.sleep(3000);
                 e.printStackTrace();
                 FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Need Manual Checks "});
             }

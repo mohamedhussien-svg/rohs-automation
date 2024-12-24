@@ -11,9 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class ChromeUtility {
@@ -68,6 +66,13 @@ public class ChromeUtility {
         }
     }
 
+    public List<WebElement> getElementsByXpath(WebElement element, String xpathExpression) {
+        try {
+            return element.findElements(By.xpath(xpathExpression));
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
 
     public WebElement getElementByXpath(WebDriver driver, String[] xpathExpression) {
         try {
@@ -82,6 +87,23 @@ public class ChromeUtility {
             return null;
         }
     }
+
+
+    public WebElement getElementByXpath(WebDriver driver, String parentXpath, String childText) {
+        try {
+            WebElement element = getElementByXpath(driver, parentXpath);
+            if (Objects.nonNull(element)) {
+                List<WebElement> elements = element.findElements(By.className("accordion-item"));
+                elements.stream().forEach(x -> System.out.println(x.getText()));
+
+            }
+
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
     public WebElement getElementByXpathJs(WebDriver driver, String xpathExpression) {
         try {

@@ -2,15 +2,15 @@ import org.automation.*;
 
 
 public class Application {
-     //private final static String SUPPLIER_NAME = "edac";
+    //private final static String SUPPLIER_NAME = "edac";
     //private final static String SUPPLIER_NAME = "delock";
     // private final static String SUPPLIER_NAME = "labfacility";
-       //private final static String SUPPLIER_NAME = "mhconnectors";
-      // private final static String SUPPLIER_NAME = "lemo";
-      //private final static String SUPPLIER_NAME = "leviton";
+    //private final static String SUPPLIER_NAME = "mhconnectors";
+    // private final static String SUPPLIER_NAME = "lemo";
+    //private final static String SUPPLIER_NAME = "leviton";
     private final static String SUPPLIER_NAME = "murrelektronik";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         switch (SUPPLIER_NAME) {
             case "delock":
@@ -36,12 +36,12 @@ public class Application {
                 break;
 
             case "leviton":
-                LevitonSearch leviton= new LevitonSearch();
+                LevitonSearch leviton = new LevitonSearch();
                 leviton.search();
                 break;
 
             case "murrelektronik":
-                MurrelektronikSearch murrelektronikSearch= new MurrelektronikSearch();
+                MurrelektronikSearch murrelektronikSearch = new MurrelektronikSearch();
                 murrelektronikSearch.search();
                 break;
         }
