@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ChromeUtility {
@@ -42,7 +43,7 @@ public class ChromeUtility {
         String workingDir = System.getProperty("user.dir");
         System.setProperty("webdriver.gecko.driver", workingDir + "\\geckodriver-v0.34.0-win64\\geckodriver.exe");
         FirefoxOptions options = new FirefoxOptions();
-        options.setBinary("C:\\Users\\A79386\\AppData\\Local\\Mozilla Firefox\\firefox.exe");
+//        options.setBinary("C:\\Users\\A79386\\AppData\\Local\\Mozilla Firefox\\firefox.exe");
         options.addPreference("browser.download.folderList", 2);
         options.addPreference("browser.download.dir", downloadDir);
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
@@ -62,6 +63,21 @@ public class ChromeUtility {
         try {
 
             return driver.findElement(By.xpath(xpathExpression));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    public WebElement getElementByXpath(WebDriver driver, String[] xpathExpression) {
+        try {
+
+            for (String xpath : xpathExpression) {
+                WebElement element = getElementByXpath(driver, xpath);
+                if (Objects.nonNull(element))
+                    return element;
+            }
+            return null;
         } catch (Exception e) {
             return null;
         }
