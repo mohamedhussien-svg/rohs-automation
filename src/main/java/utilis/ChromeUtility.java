@@ -66,6 +66,19 @@ public class ChromeUtility {
         }
     }
 
+    public WebElement getElementByCss(WebDriver driver, String css) {
+        try {
+
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000L));
+            return wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+//            return driver.findElement(By.cssSelector(css));
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public List<WebElement> getElementsByXpath(WebElement element, String xpathExpression) {
         try {
             return element.findElements(By.xpath(xpathExpression));

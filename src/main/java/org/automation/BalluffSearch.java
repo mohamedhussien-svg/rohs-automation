@@ -19,10 +19,8 @@ public class BalluffSearch {
     public static final String openSearchBoxXpath = "/html/body/div[2]/header/div[1]/div[1]/div/div[2]/div[1]/div/button";
     public static final String searchBoxXpath = "/html/body/div[2]/header/div[1]/div[1]/div/div[2]/div[1]/div/div/div/input";
     public static final String partLinkXpath = "/html/body/div[2]/header/div[3]/div/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div[3]/div/a";
-    public static final String downLoadXpath = "/html/body/div[2]/div[1]/article/div[1]/div[2]/div[10]/button[2]";
     public static final String productDocXpath = "/html/body/div[2]/div[1]/div[5]/div/div/div[4]/div/div[2]/button[1]";
     public static final String listDocXpath = "/html/body/div[2]/div[1]/div[5]/div/div/div[4]/div/div[2]";
-
 
     public void search() {
 
@@ -46,12 +44,17 @@ public class BalluffSearch {
 
         ChromeUtility chromeUtility = new ChromeUtility(downloadDir);
 
-        WebDriver driver = chromeUtility.getFireFoxDriver();
+        WebDriver driver = null;
 
         List<String> parts = FileUtility.readFile(inputFilePath);
 
         for (String part : parts) {
             try {
+
+                if (driver != null)
+                    driver.quit();
+                driver = chromeUtility.getFireFoxDriver();
+
                 driver.get(URL);
                 chromeUtility.wait(driver, 5);
 
@@ -77,12 +80,23 @@ public class BalluffSearch {
                 }
                 searchBox.sendKeys(part + Keys.ENTER);
                 chromeUtility.wait(driver, 5);
+                Thread.sleep(5000);
 
-//---
-                WebElement products = chromeUtility.getElementByXpath(driver, partLinkXpath);
+                WebElement element = chromeUtility.getElementByCss(driver, ".mt-2.text-xs.leading-tight.text-gray-400");
+
+
+                if (Objects.isNull(element)) {
+                    System.out.println("PartNumber Not Found " + part + " Product Tab Not found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+                    continue;
+                }
+                WebElement products = element.findElement(By.tagName("a"));
+
+//                WebElement products = chromeUtility.getElementByXpath(driver, new String[]{partLinkXpath, "/html/body/div[2]/header/div[3]/div/div[2]/div/div[4]/div[1]/div/div/div[2]/div/div/div[1]/div[2]/div[4]/div/div/a"});
                 if (Objects.isNull(products)) {
                     System.out.println("PartNumber Not Found " + part + " Product Tab Not found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+
                     continue;
                 }
 
@@ -90,23 +104,33 @@ public class BalluffSearch {
                 Thread.sleep(5000);
                 products.click();
 
-                WebElement resultPage = chromeUtility.getElementByXpathJsVisibility(driver, downLoadXpath);
-                if (Objects.isNull(resultPage)) {
+
+                WebElement eleByXpath = chromeUtility.getElementByXpath(driver, "/html/body/div[2]/div[1]/article/div[1]/div[2]");
+                if (Objects.isNull(eleByXpath)) {
+                    System.out.println("PartNumber Not Found " + part + " Product Tab Not found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+                    continue;
+                }
+                List<WebElement> buttons = eleByXpath.findElements(By.tagName("button"));
+
+
+                Optional<WebElement> resultPage = buttons.stream().filter(x -> x.getText().equalsIgnoreCase("Downloads")).findFirst();
+                if (!resultPage.isPresent()) {
                     System.out.println("PartNumber Not Found " + part);
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Downloads Not Found"});
                     continue;
                 }
 
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", resultPage);
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", resultPage.get());
 
                 Thread.sleep(5000);
-                resultPage.click();
+                resultPage.get().click();
                 chromeUtility.wait(driver, 5);
 
                 WebElement docPage = chromeUtility.getElementByXpath(driver, productDocXpath);
                 if (Objects.isNull(docPage)) {
                     System.out.println("PartNumber Not Found " + part);
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Docs Not Found"});
                     continue;
                 }
 
@@ -124,15 +148,12 @@ public class BalluffSearch {
                 chromeUtility.wait(driver, 5);
                 List<WebElement> docs = listDiv.findElements(By.tagName("div"));
                 chromeUtility.wait(driver, 5);
-//
-//                docs.stream().forEach(x -> {
-//                    System.out.println(x.getText());
-//                });
+
 
                 Optional<WebElement> first = docs.stream().filter(x -> x.getText().equalsIgnoreCase("Material Compliance")).findFirst();
                 if (!first.isPresent()) {
                     System.out.println("PartNumber Not Found " + part);
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Material Compliance Not Found"});
                     continue;
                 }
                 WebElement webElement = first.get();
@@ -161,3 +182,4 @@ public class BalluffSearch {
         driver.quit();
     }
 }
+
