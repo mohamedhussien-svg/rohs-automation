@@ -114,6 +114,15 @@ public class ChromeUtility {
         }
     }
 
+    public WebElement getElementByXpathJsVisibility(WebDriver driver, String xpathExpression) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000L));
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public WebElement getElementByClassName(WebDriver driver, String className) {
         try {
 

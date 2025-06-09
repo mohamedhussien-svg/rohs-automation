@@ -1,0 +1,3 @@
+Part	Status	PDF	Comment
+BAE00LA	Found	C:\Users\Think\rohs-automation\output_files\Balluff\MCD_PV120731_en.pdf
+BAE00LA	Found	C:\Users\Think\rohs-automation\output_files\Balluff\MCD_PV120731_en(1).pdf

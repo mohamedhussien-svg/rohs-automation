@@ -8,7 +8,9 @@ public class Application {
     //private final static String SUPPLIER_NAME = "mhconnectors";
     // private final static String SUPPLIER_NAME = "lemo";
     //private final static String SUPPLIER_NAME = "leviton";
-    private final static String SUPPLIER_NAME = "murrelektronik";
+
+    //    private final static String SUPPLIER_NAME = "murrelektronik";
+    private final static String SUPPLIER_NAME = "Balluff";
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -43,6 +45,10 @@ public class Application {
             case "murrelektronik":
                 MurrelektronikSearch murrelektronikSearch = new MurrelektronikSearch();
                 murrelektronikSearch.search();
+                break;
+            case "Balluff":
+                BalluffSearch balluffSearch = new BalluffSearch();
+                balluffSearch.search();
                 break;
         }
     }
