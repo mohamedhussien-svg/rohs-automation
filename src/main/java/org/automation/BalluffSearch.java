@@ -94,8 +94,8 @@ public class BalluffSearch {
 
 //                WebElement products = chromeUtility.getElementByXpath(driver, new String[]{partLinkXpath, "/html/body/div[2]/header/div[3]/div/div[2]/div/div[4]/div[1]/div/div/div[2]/div/div/div[1]/div[2]/div[4]/div/div/a"});
                 if (Objects.isNull(products)) {
-                    System.out.println("PartNumber Not Found " + part + " Product Tab Not found");
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+                    System.out.println("PartNumber Not Found " + part + " Product Link Not found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Link Not found"});
 
                     continue;
                 }
@@ -108,7 +108,7 @@ public class BalluffSearch {
                 WebElement eleByXpath = chromeUtility.getElementByXpath(driver, "/html/body/div[2]/div[1]/article/div[1]/div[2]");
                 if (Objects.isNull(eleByXpath)) {
                     System.out.println("PartNumber Not Found " + part + " Product Tab Not found");
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Tab Not found"});
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Downloads Tab Not found"});
                     continue;
                 }
                 List<WebElement> buttons = eleByXpath.findElements(By.tagName("button"));
@@ -116,8 +116,8 @@ public class BalluffSearch {
 
                 Optional<WebElement> resultPage = buttons.stream().filter(x -> x.getText().equalsIgnoreCase("Downloads")).findFirst();
                 if (!resultPage.isPresent()) {
-                    System.out.println("PartNumber Not Found " + part);
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Downloads Not Found"});
+                    System.out.println("PartNumber Not Found " + part + "Download button Not Found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Download button Not Found"});
                     continue;
                 }
 
@@ -129,7 +129,7 @@ public class BalluffSearch {
 
                 WebElement docPage = chromeUtility.getElementByXpath(driver, productDocXpath);
                 if (Objects.isNull(docPage)) {
-                    System.out.println("PartNumber Not Found " + part);
+                    System.out.println("PartNumber Not Found " + part + "Product Docs Not Found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Product Docs Not Found"});
                     continue;
                 }
@@ -141,8 +141,8 @@ public class BalluffSearch {
 
                 WebElement listDiv = chromeUtility.getElementByXpath(driver, listDocXpath);
                 if (Objects.isNull(listDiv)) {
-                    System.out.println("PartNumber Not Found " + part);
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
+                    System.out.println("PartNumber Not Found " + part + "List of Docs  Not Found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "List of Docs  Not Found"});
                     continue;
                 }
                 chromeUtility.wait(driver, 5);
@@ -152,7 +152,7 @@ public class BalluffSearch {
 
                 Optional<WebElement> first = docs.stream().filter(x -> x.getText().equalsIgnoreCase("Material Compliance")).findFirst();
                 if (!first.isPresent()) {
-                    System.out.println("PartNumber Not Found " + part);
+                    System.out.println("PartNumber Not Found " + part + "Material Compliance Not Found");
                     FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Material Compliance Not Found"});
                     continue;
                 }
@@ -163,8 +163,8 @@ public class BalluffSearch {
 
                 Optional<WebElement> download = material.stream().filter(x -> x.getText().equalsIgnoreCase("download")).findFirst();
                 if (!download.isPresent()) {
-                    System.out.println("PartNumber Not Found " + part);
-                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "PartNumber Not Found"});
+                    System.out.println("PartNumber Not Found " + part + "Material Compliance Button Not Found");
+                    FileUtility.writeFileRow(partsStatusFile, new String[]{part, "NotFound", "", "Material Compliance Button Not Found"});
                     continue;
                 }
                 download.get().click();
